@@ -87,7 +87,7 @@ function AllTodos({mode }) {
 
       <button
         className="btn btn-secondary"
-        onClick={() => navigate("/homepage")}
+        onClick={() => navigate("/")}
         style={{
           position: "fixed",
           bottom: 20,

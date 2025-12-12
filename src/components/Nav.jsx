@@ -9,7 +9,7 @@ function Nav(props) {
     navigate("/allTodos");
   };
   const goToHome = () => {
-    navigate("/homepage")
+    navigate("/")
   }
   return (
     <div className={`d-flex flex-column flex-shrink-0 p-3 bg-${props.mode === "light" ? "light" : "dark"}`} style={{ width: "200px", minHeight: "100vh" }}>
