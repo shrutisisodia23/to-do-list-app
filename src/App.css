@@ -1,0 +1,16 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.collapse-horizontal{
+  width: 0;
+  overflow: hidden;
+  transition: width 0.35s ease;
+}
+
+.collapse-horizontal.show{
+  width: 250px;
+}
