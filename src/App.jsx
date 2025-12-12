@@ -35,7 +35,7 @@ function App() {
         <div className="container">
           <Routes>
             <Route
-              path="/homepage"
+              path=""
               element={
                 <HomePage
                   mode={mode}
