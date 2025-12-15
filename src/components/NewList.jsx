@@ -144,7 +144,7 @@ function NewList({ mode }) {
           position: "fixed",
           bottom: 16,
           right: 16,
-          zIndex: 1000,
+          zIndex: 9999
         }}
       >
         ← Back
