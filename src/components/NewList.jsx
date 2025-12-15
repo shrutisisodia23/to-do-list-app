@@ -7,19 +7,19 @@ function NewList({ mode }) {
   const today = new Date().toLocaleDateString();
   const [tasks, setTasks] = useState([{ text: "", completed: false }]);
   const [alertMessage, setAlertMsg] = useState("");
+
   const showAlert = (msg) => {
     setAlertMsg(msg);
     setTimeout(() => setAlertMsg(""), 1000);
   };
+
   const handleSave = () => {
     const allTodos = JSON.parse(localStorage.getItem("allTodos")) || [];
-    const newTodo = {
+    allTodos.push({
       id: Date.now(),
       date: today,
-      tasks: tasks,
-    };
-
-    allTodos.push(newTodo);
+      tasks,
+    });
     localStorage.setItem("allTodos", JSON.stringify(allTodos));
     showAlert("Tasks saved successfully!");
     setTimeout(() => navigate("/alltodos"), 1000);
@@ -28,9 +28,9 @@ function NewList({ mode }) {
   const handleKeyDown = (e, index) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      const newTasks = [...tasks];
-      newTasks.splice(index + 1, 0, { text: "", completed: false });
-      setTasks(newTasks);
+      const copy = [...tasks];
+      copy.splice(index + 1, 0, { text: "", completed: false });
+      setTasks(copy);
       setTimeout(() => {
         const inputs = document.querySelectorAll(".task-input");
         if (inputs[index + 1]) inputs[index + 1].focus();
@@ -39,46 +39,45 @@ function NewList({ mode }) {
   };
 
   const handleChange = (e, index) => {
-    const newTasks = [...tasks];
-    newTasks[index].text = e.target.value;
-    setTasks(newTasks);
+    const copy = [...tasks];
+    copy[index].text = e.target.value;
+    setTasks(copy);
   };
 
   const handleToggle = (index) => {
-    const newTasks = [...tasks];
-    newTasks[index].completed = !newTasks[index].completed;
-    setTasks(newTasks);
+    const copy = [...tasks];
+    copy[index].completed = !copy[index].completed;
+    setTasks(copy);
   };
 
-  const completedCount = tasks.filter((t) => t.completed).length;
+  const completed = tasks.filter((t) => t.completed).length;
   const progress = tasks.length
-    ? Math.round((completedCount / tasks.length) * 100)
+    ? Math.round((completed / tasks.length) * 100)
     : 0;
 
   return (
     <div
-      className="container-fluid py-4"
+      className="container-fluid py-3 px-2 px-sm-3"
       style={{
         backgroundColor: mode === "dark" ? "#111" : "#f7f7f7",
         minHeight: "100vh",
         color: mode === "dark" ? "white" : "black",
-        position: "relative",
       }}
     >
       {alertMessage && (
-        <div className="alert alert-success text-center py-2" role="alert">
+        <div className="alert alert-success text-center py-2">
           {alertMessage}
         </div>
       )}
 
-      <h2 className="mb-4" style={{ fontWeight: 700 }}>
-        Task List — {today}
-      </h2>
+      <div className="text-center mb-3">
+        <h4 className="fw-bold">Task List — {today}</h4>
+      </div>
 
       <div className="row justify-content-center">
-        <div className="col-11 col-md-8 col-lg-6">
+        <div className="col-12 col-sm-11 col-md-8 col-lg-6">
           <div
-            className="card p-4 shadow-sm mb-4"
+            className="card p-3 p-sm-4 shadow-sm mb-4"
             style={{
               backgroundColor: mode === "dark" ? "#424040ff" : "#fff",
               borderRadius: 12,
@@ -98,15 +97,17 @@ function NewList({ mode }) {
                   type="checkbox"
                   checked={task.completed}
                   onChange={() => handleToggle(index)}
-                  className="me-3"
-                  style={{ width: 20, height: 20 }}
+                  className="me-2 me-sm-3"
+                  style={{ width: 18, height: 18 }}
                 />
                 <input
                   type="text"
                   value={task.text}
                   onChange={(e) => handleChange(e, index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className={mode ==="dark" ?"input-dark" : "input-light"}
+                  className={`flex-grow-1 task-input ${
+                    mode === "dark" ? "input-dark" : "input-light"
+                  }`}
                   placeholder="Enter task"
                   style={{
                     backgroundColor: "transparent",
@@ -119,22 +120,17 @@ function NewList({ mode }) {
               </div>
             ))}
 
-            <button className="btn btn-success mt-3" onClick={handleSave}>
+            <button className="btn btn-success w-100 mt-2" onClick={handleSave}>
               Save
             </button>
           </div>
 
           <div className="mb-4">
             <label className="d-block mb-2">Progress: {progress}%</label>
-
-            <div className="progress" style={{ height: 18 }}>
+            <div className="progress" style={{ height: 16 }}>
               <div
                 className="progress-bar"
-                role="progressbar"
                 style={{ width: `${progress}%` }}
-                aria-valuenow={progress}
-                aria-valuemin="0"
-                aria-valuemax="100"
               />
             </div>
           </div>
@@ -146,9 +142,9 @@ function NewList({ mode }) {
         onClick={() => navigate("/")}
         style={{
           position: "fixed",
-          bottom: 20,
-          right: 20,
-          zIndex: 9999,
+          bottom: 16,
+          right: 16,
+          zIndex: 1000,
         }}
       >
         ← Back

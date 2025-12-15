@@ -12,11 +12,8 @@ function HomePage(props) {
 
   return (
     <div className="container mt-3">
-
-      {/* Buttons on Top Right */}
-
-
-      <div className="d-flex justify-content-center">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-10 col-lg-8">
         <div
           className="card text-center shadow"
           style={{
@@ -30,7 +27,7 @@ function HomePage(props) {
 
           <div className="card-body">
             <h5 className="card-title">{props.appName}</h5>
-            <p>{props.introduction}</p>
+            <p className="px-2 px-md-4">{props.introduction}</p>
 
             <button className="btn btn-primary" onClick={handleNew}>
               New +
@@ -38,7 +35,7 @@ function HomePage(props) {
           </div>
         </div>
       </div>
-
+    </div>
     </div>
   );
 }
