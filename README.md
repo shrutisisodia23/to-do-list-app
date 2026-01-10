@@ -21,8 +21,8 @@ React + Vite, JavaScript (ES6+), Bootstrap, localStorage for data persistence
 5. Toggle Dark/Light mode from the navbar.
 6. Your todos will remain saved because of localStorage.
 
-# Future Improvements
-Add categories/priority, Add search filter, Sync with backend (Node.js + MongoDB)
+# Update
+The App now usees the backend Node.js + Express with database MySQL
 
 # Author
 Shruti Sisodiya

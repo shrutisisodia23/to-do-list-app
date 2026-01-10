@@ -3,12 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 function HomePage(props) {
   const navigate = useNavigate();
-
   const handleNew = () => {
     navigate("/newlist");
   };
-
-
 
   return (
     <div className="container mt-3">

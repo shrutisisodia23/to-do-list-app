@@ -13,17 +13,30 @@ function NewList({ mode }) {
     setTimeout(() => setAlertMsg(""), 1000);
   };
 
-  const handleSave = () => {
-    const allTodos = JSON.parse(localStorage.getItem("allTodos")) || [];
-    allTodos.push({
-      id: Date.now(),
-      date: today,
-      tasks,
+ const handleSave = async () => {
+  try {
+    const res = await fetch("/api/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        date: today,
+        tasks
+      })
     });
-    localStorage.setItem("allTodos", JSON.stringify(allTodos));
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || "Failed to save");
+      return;
+    }
     showAlert("Tasks saved successfully!");
     setTimeout(() => navigate("/alltodos"), 1000);
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
+  }
+};
 
   const handleKeyDown = (e, index) => {
     if (e.key === "Enter") {

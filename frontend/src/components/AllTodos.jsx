@@ -13,14 +13,14 @@ function AllTodos({ mode }) {
   };
 
   useEffect(() => {
-    const savedTodos = JSON.parse(localStorage.getItem("allTodos")) || [];
-    setAllTodos(savedTodos);
-  }, []);
+    fetch("/api/todos")
+      .then((res) => res.json())
+      .then((data) => setAllTodos(data)).catch(() => triggerAlert("Failed to load todos"));
+    }, []);
 
-  const removeTodo = (id) => {
-    const newList = allTodos.filter((item) => item.id !== id);
-    setAllTodos(newList);
-    localStorage.setItem("allTodos", JSON.stringify(newList));
+  const removeTodo = async (id) => {
+    await fetch(`/api/todos/${id}`, { method: "DELETE"});
+    setAllTodos((prev) => prev.filter((item) => item.id !== id));
     triggerAlert("Todo list deleted!");
   };
 
@@ -31,6 +31,7 @@ function AllTodos({ mode }) {
           {alertText}
         </div>
       )}
+
       <div className="mb-3">
         <h5
           className="fw-bold"
@@ -48,6 +49,7 @@ function AllTodos({ mode }) {
           </p>
         )}
       </div>
+
       <div className="row justify-content-center">
         <div className="col-12 col-sm-11 col-md-8 col-lg-6">
           {allTodos.map((todo) => {
@@ -103,6 +105,7 @@ function AllTodos({ mode }) {
           })}
         </div>
       </div>
+
       <button
         className="btn btn-secondary"
         onClick={() => navigate("/")}

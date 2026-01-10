@@ -1,6 +1,12 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const router = express.Router();
+const controller = require("../controllers/todoController");
 
-const viewTodo = require('../frontend/src/components/ViewTodo')
+router.post("/", controller.createTodoList);
+router.get("/", controller.getAllTodos);
+router.get("/:id", controller.getTodoById);
+router.put("/:id", controller.updateTodo);
+router.delete("/:id", controller.deleteTodo);
 
-app.get('/api/viewTodo', )
+module.exports = router;
+
